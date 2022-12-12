@@ -24,7 +24,7 @@ load_dotenv()
 
 # TODO: set this to a secure value before deploying to production
 ALLOWED_HOSTS = ["www.spotlightkenya.club", "spotlightkenya.club", "127.0.0.1","0.0.0.0",
-                 "localhost","spotlightkenya.herokuapp.com"]
+                 "localhost",'spotlight-kenya.herokuapp.com']
 CSRF_TRUSTED_ORIGINS = ['https://www.spotlightkenya.club']
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -72,7 +72,7 @@ INSTALLED_APPS = [
     "navigation",
 
 
-    
+
     "search",
 
     "subscription",
