@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>Login</h1>
+<hr>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" action="">
+                {% csrf_token %}
+                {{ form|crispy }}
+
+                <input type="submit" value="login" class="btn btn-primary">
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+            <p>By login in you agree to our <a href="https://drive.google.com/file/d/1nzBvi-0T_6UACZTjSY3OK6O0eDy1bo_t/view?usp=share_link">terms & conditions </a>and our <a href="https://drive.google.com/file/d/1Pf3gn-OKVEff0dBTgmA1LMcTy4g60cEq/view?usp=share_link">privacy policy</a></p>
+
+            <a href="{% url 'password_reset' %}">Lost password?</a>
+        </div>
+        <a href="https://www.spotlightkenya.club/accounts/register/">Sign up</a>
+
+    </div>
+{% endblock content %}

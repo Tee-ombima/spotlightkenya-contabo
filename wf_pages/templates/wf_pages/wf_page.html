@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <h1>
+        {{ page.title }}
+    </h1>
+
+    {% include_block page.body %}
+
+    {% if page.collection %}
+        <dl>
+            <dt>
+                Collection
+            </dt>
+            <dd>
+                <a href="{% pageurl page.collection %}">
+                    {{ page.collection }}
+                </a>
+            </dd>
+        </dl>
+    {% endif %}
+{% endblock %}

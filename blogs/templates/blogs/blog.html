@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load tz %}
+{% load static wagtailcore_tags %}
+
+{% block body_class %}template-blog{% endblock %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ blog.title }}</h1>
+
+    <p class="font-weight-bold mb-2">
+        {% if blog.start_date %}
+            {{ blog.start_date | timezone:"Africa/Nairobi" | date:"F d, Y" }}
+        {% endif %}
+
+        {% if blog.end_date %}
+            {{ blog.end_date | timezone:"Africa/Nairobi" | date:"F d, Y" }}
+        {% endif %}
+
+        Africa/Nairobi
+    </p>
+
+
+
+
+    {% if blog.body %}
+        {{ blog.body }}
+    {% endif %}
+
+    {% if blog.website %}
+        <a
+            href="{{ blog.specific.website }}"
+            class="btn btn-primary btn-sm"
+            target="blank"
+        >
+            <i class="bi bi-link" aria-hidden="true"></i>
+            Visit blog website
+        </a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load tz %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-magazineindexpage{% endblock %}
+
+{% block content %}
+    <h1>
+        {{ page.title }}
+    </h1>
+
+    <div class="intro">
+        {{ page.intro | richtext }}
+    </div>
+
+    {% if events %}
+        {% for event in events %}
+
+            <div class="card mb-2">
+                <div class="card-body">
+                    <p class="card-title font-weight-bold">
+                        {{ event.title }} -
+                        <span>{{event.teaser}}</span>
+                    </p>
+
+                    {% if event.teaser %}
+                        <p class="card-text">
+                            {{ event.body2 }}
+                        </p>
+                    {% endif %}
+
+                    <a href="{% pageurl event %}" class="btn btn-outline-primary btn-sm stretched-link">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        View details
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="step-links ms-3 mt-1 text-center">
+            {% if events.has_previous %}
+                <a href="?page={{ events.previous_page_number }}" class="btn btn-outline-primary btn-sm">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ events.number }} of {{ events.paginator.num_pages }}
+            </span>
+
+            {% if events.has_next %}
+                <a href="?page={{ events.next_page_number }}" class="btn btn-outline-primary btn-sm">next</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>There are no events</p>
+    {% endif %}
+{% endblock %}

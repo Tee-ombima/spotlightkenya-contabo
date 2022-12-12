@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load tz %}
+{% load static wagtailcore_tags %}
+
+{% block body_class %}template-event{% endblock %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ event.title }}</h1>
+
+    <p class="font-weight-bold mb-2">
+        {% if event.start_date %}
+            {{ event.start_date | date:"Y" }}
+        {% endif %}
+
+        {% if event.end_date %}
+            {{ event.end_date | date:"Y" }}
+        {% endif %}
+
+        Africa/Nairobi
+    </p>
+
+
+
+
+    {% if event.body %}
+        {{ event.body }}
+    {% endif %}
+
+    {% if event.website %}
+        <a
+            href="{{ event.specific.website }}"
+            class="btn btn-primary btn-sm"
+            target="blank"
+        >
+            <i class="bi bi-link" aria-hidden="true"></i>
+            Visit event website
+        </a>
+    {% endif %}
+{% endblock %}

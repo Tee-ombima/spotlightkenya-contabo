@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-podcastpage{% endblock %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% image page.sode_image max-286x300 as my_image %}
+
+{% load static %}
+
+
+{% block content %}
+{% image page.sode_image max-286x300 as my_image %}
+    <div class="content" >
+            <div class="post" >
+                <table class="post-table">
+                    <tr>
+                        <td><h2 class="post-title">
+</h2></td>
+                    </tr>
+                    <tr>
+                        <td><h2 class="post-title">{{ page.title }}
+</h2></td>
+                    </tr>
+                    <tr>
+                        <td><h3 class="post-date">{{ page.date|date:"M d, Y" }}</h2></td>
+                    </tr>
+                    <tr>
+                        <td><p class="post-intro">{{ page.body }} </p></td>
+                    </tr>
+                    <tr style="background-image:url({{ my_image.url }})" alt="{% static 'img/header-image.jpg' %}">
+                        <td class="audio-row">
+                        <audio controls>
+                        <source src="{{ page.audio.file.url }}" type="audio/mpeg">
+                        Unsupported Audio
+                        </audio>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        {% for tag in page.tags.all %}
+                            <a href="{% pageurl page %}?tag={{ tag }}" class="tag">{{ tag }}</a>
+                        {% endfor %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+{% endblock %}

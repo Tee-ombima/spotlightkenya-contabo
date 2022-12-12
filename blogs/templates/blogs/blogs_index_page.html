@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% load tz %}
+{% load hitcount_tags %}
+
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-magazineindexpage{% endblock %}
+
+{% block content %}
+    <h1>
+        {{ page.title }}
+    </h1>
+
+    <div class="intro">
+        {{ page.intro | richtext }}
+    </div>
+
+    {% if blogs %}
+        {% for blog in blogs %}
+
+            <div class="card mb-2">
+                <div class="card-body">
+                    <p class="card-title font-weight-bold">
+                        {{ blog.title }} -
+                        <span>{{ blog.start_date | timezone:"Africa/Nairobi" | date:"F d, Y" }} Africa/Nairobi</span>
+                    </p>
+
+                    {% if blog.teaser %}
+                        <p class="card-text">
+                            {{ blog.teaser }}
+                        </p>
+                    {% endif %}
+                    <p>
+                      <span class="p-viewer">
+  					<i class="fa fa-eye" aria-hidden="true"> {% get_hit_count for blog %}</i>
+  				</span>
+
+                    </p>
+
+
+
+                    <a href="{% pageurl blog %}" class="btn btn-outline-primary btn-sm stretched-link">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        View details
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="step-links ms-3 mt-1 text-center">
+            {% if blogs.has_previous %}
+                <a href="?page={{ blogs.previous_page_number }}" class="btn btn-outline-primary btn-sm">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}
+            </span>
+
+            {% if blogs.has_next %}
+                <a href="?page={{ blogs.next_page_number }}" class="btn btn-outline-primary btn-sm">next</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>There are no blogs</p>
+    {% endif %}
+{% endblock %}

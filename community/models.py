@@ -1,0 +1,135 @@
+from django.db import models
+
+from wagtail.admin.edit_handlers import (
+    FieldPanel,
+    PageChooserPanel,
+    StreamFieldPanel,
+)
+from wagtail.core import blocks
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.search import index
+
+from streams import blocks as wf_blocks
+
+
+class CommunityPage(Page):
+    body = StreamField(
+        [
+            ("heading", wf_blocks.HeadingBlock()),
+            ("rich_text", blocks.RichTextBlock()),
+            ("image", ImageChooserBlock()),
+            ("card", wf_blocks.CardBlock()),
+            (
+                "card_row",
+                blocks.ListBlock(
+                    wf_blocks.PageCardBlock(label="Page"),
+                    template="streams/blocks/card_row.html",
+                ),
+            ),
+            ("spacer", wf_blocks.SpacerBlock()),
+        ],
+        null=True,
+    )
+
+    content_panels = Page.content_panels + [
+        StreamFieldPanel("body"),
+    ]
+
+    max_count = 1
+
+    parent_page_types = ["home.HomePage"]
+    subpage_types = [
+        "contact.MeetingIndexPage",
+        "contact.OrganizationIndexPage",
+        "contact.PersonIndexPage",
+        "community.CommunityDirectoryIndexPage",
+        "community.OnlineWorshipIndexPage",
+        "memorials.MemorialIndexPage",
+    ]
+
+
+class OnlineWorship(Page):
+    description = RichTextField(blank=True)
+
+    hosted_by = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="online_worship",
+    )
+
+    times_of_worship = RichTextField(blank=True)
+
+    website = models.URLField(null=True, blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel("description"),
+        PageChooserPanel("hosted_by", ["contact.Meeting", "contact.Organization"]),
+        FieldPanel("times_of_worship"),
+        FieldPanel("website"),
+    ]
+
+    parent_page_types = [
+        "community.OnlineWorshipIndexPage",
+    ]
+    subpage_types = []
+
+    search_template = "search/online_worship.html"
+
+    search_fields = Page.search_fields + [
+        index.SearchField("description", partial_match=True),
+    ]
+
+
+class OnlineWorshipIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [FieldPanel("intro")]
+
+    parent_page_types = ["community.CommunityPage"]
+    subpage_types = ["community.OnlineWorship"]
+
+    max_count = 1
+
+    template = "community/online_worship_index_page.html"
+
+
+class CommunityDirectory(Page):
+    description = RichTextField(blank=True)
+
+    website = models.URLField(null=True, blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel("description"),
+        FieldPanel("website"),
+    ]
+
+    parent_page_types = [
+        "community.CommunityDirectoryIndexPage",
+    ]
+    subpage_types = []
+
+    search_template = "search/community_directory.html"
+
+    search_fields = Page.search_fields + [
+        index.SearchField("description", partial_match=True),
+    ]
+
+    class Meta:
+        verbose_name_plural = "community directories"
+
+
+class CommunityDirectoryIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [FieldPanel("intro")]
+
+    parent_page_types = ["community.CommunityPage"]
+    subpage_types = ["community.CommunityDirectory"]
+
+    max_count = 1
+
+    template = "community/community_directory_index_page.html"

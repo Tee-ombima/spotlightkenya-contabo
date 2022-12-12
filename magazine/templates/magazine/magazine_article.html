@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% load user_is_subscriber %}
+
+{% block body_class %}template-magazinearticlepage{% endblock %}
+
+{% block content %}
+    <h1>
+        {{ page.title }}
+    </h1>
+
+    <dl class="row">
+    {% if page.authors.count %}
+        <dt class="col-sm-2">Author(s):</dt>
+        <dd class="col-sm-10">
+            {% for author in page.authors.all %}
+                {% if author.author.live %}
+                    <a href="{% pageurl author.author %}">{{ author.author }}</a>{% if not forloop.last %},{% endif %}
+                {% else %}
+                    {{ author.author }}{% if not forloop.last %},{% endif %}
+                {% endif %}
+            {% endfor %}
+        </dd>
+    {% endif %}
+
+    <dt class="col-sm-2">
+        Issue:
+    </dt>
+    <dd class="col-sm-10">
+        <a href="{% pageurl page.get_parent %}" class="card-link">
+            {{ page.get_parent }} ({{ page.get_parent.specific.publication_date| date:"F Y" }})
+        </a>
+    </dd>
+
+    {% if page.department %}
+        <dt class="col-sm-2">
+                Department:
+        </dt>
+        <dd class="col-sm-10">
+            <a href="{% pageurl page.department %}">
+                {{ page.department }}
+            </a>
+        </dd>
+    {% endif %}
+    </dl>
+
+    {% if user_can_view_full_article %}
+        {% include_block page.body %}
+    {% else %}
+        <a href="/subscribe" class="btn btn-outline btn-success">
+            Subscribe now for full access.
+        </a>
+
+        {{ page.teaser | richtext }}
+    {% endif %}
+
+    {% if page.tags.all.count %}
+        <div class="tags">
+            {% for tag in page.tags.all %}
+                <a
+                    href="{% slugurl 'tags' %}?tag={{ tag }}"
+                    class="btn btn-outline-primary btn-sm">
+                    {{ tag }}
+                </a>
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+    <p class="mt-3">
+        <a href="{{ page.get_parent.url }}">
+            Return to "{{ page.get_parent.title }}" issue
+        </a>
+    </p>
+{% endblock %}
