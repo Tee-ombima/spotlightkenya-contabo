@@ -57,13 +57,11 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     "wagtailemoji",
     "accounts",
-    "addresses",
-    "cart",
+
     "community",
     "contact",
     "content_migration",
     "documents",
-    "donations",
     "events",
     "blogs",
     "facets",
@@ -72,11 +70,11 @@ INSTALLED_APPS = [
     "library",
     "memorials",
     "navigation",
-    "news",
-    "orders",
-    "payment.apps.PaymentConfig",
+
+
+    
     "search",
-    "store",
+
     "subscription",
     "wagtailpod",
     "magazine",

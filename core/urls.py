@@ -33,10 +33,10 @@ urlpatterns = [
     ),
     path("accounts/", include("django_registration.backends.one_step.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("cart/", include("cart.urls", namespace="cart")),
+
     path("magazine/", include(magazine_urls), name="magazine"),
-    path("orders/", include("orders.urls", namespace="orders")),
-    path("payment/", include("payment.urls", namespace="payment")),
+
+    
     path("documents/", include(wagtaildocs_urls)),
     re_path(r"^search/$", search_views.search, name="search"),
     path("subscriptions/", include(subscription_urls), name="subscriptions"),

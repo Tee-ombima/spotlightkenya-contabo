@@ -2,12 +2,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 
 
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
     PageChooserPanel,
-    StreamFieldPanel,
+
 )
 from wagtail.core.models import Orderable, Page
 from wagtail.core.fields import RichTextField, StreamField
@@ -58,6 +58,7 @@ class LibraryItem(Page):
         ],
         null=True,
         blank=True,
+        use_json_field=True,
     )
     item_audience = models.ForeignKey(
         "facets.Audience", on_delete=models.SET_NULL, null=True, blank=True
@@ -81,7 +82,7 @@ class LibraryItem(Page):
             heading="Authors",
             help_text="Select one or more authors, who contributed to this article",
         ),
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
         MultiFieldPanel(
             children=[
                 FieldPanel("publication_date", widget=DatePickerInput()),

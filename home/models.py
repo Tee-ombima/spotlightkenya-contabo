@@ -1,6 +1,6 @@
 from django.db import models
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, PageChooserPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel, PageChooserPanel
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page, Orderable
 
@@ -33,7 +33,7 @@ class HomePage(Page):
 
     subpage_types = [
         "community.CommunityPage",
-        "donations.DonatePage",
+
         "events.EventsIndexPage",
         "blogs.BlogsIndexPage",
         "wagtailpod.PodIndexPage",
@@ -43,8 +43,8 @@ class HomePage(Page):
         "library.LibraryIndexPage",
         "magazine.MagazineIndexPage",
         "memorials.MemorialIndexPage",
-        "news.NewsIndexPage",
-        "store.StoreIndexPage",
+
+
         "subscription.ManageSubscriptionPage",
         "subscription.SubscriptionIndexPage",
         "wf_pages.WfPage",

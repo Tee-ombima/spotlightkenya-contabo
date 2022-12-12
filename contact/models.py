@@ -1,7 +1,7 @@
 from django.db import models
 
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
@@ -11,7 +11,7 @@ from wagtail.core.models import Orderable, Page
 from wagtail.core.fields import RichTextField
 from wagtail.search import index
 
-from addresses.models import Address
+
 
 MEETING_TYPE_CHOICES = (
     ("monthly_meeting", "Monthly Meeting"),
@@ -111,7 +111,7 @@ class Meeting(Page):
         FieldPanel("phone"),
         FieldPanel("meeting_type"),
         InlinePanel("worship_times", label="Worship times"),
-        InlinePanel("addresses", label="Address"),
+
         MultiFieldPanel(
             [InlinePanel("presiding_clerks", label="Presiding clerk")],
             heading="Presiding clerk(s)",
@@ -157,10 +157,6 @@ class Meeting(Page):
         return context
 
 
-class MeetingAddress(Orderable, Address):
-    page = ParentalKey(
-        "contact.Meeting", on_delete=models.CASCADE, related_name="addresses"
-    )
 
 
 class WorshipTypeChoices(models.TextChoices):

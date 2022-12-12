@@ -4,17 +4,17 @@ from django.utils import timezone
 
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.admin.panels import FieldPanel
+#from wagtail.images.panels import FieldPanel
 from wagtail.search import index
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase, Tag
 
-from wagtailmedia.edit_handlers import MediaChooserPanel
+#from wagtailmedia.panels import MediaChooserPanel
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from streams.blocks import FormattedImageChooserStructBlock, HeadingBlock, SpacerBlock
@@ -46,7 +46,7 @@ class PodIndexPage(Page):
         FieldPanel('itunes_name'),
         FieldPanel('author_email'),
         FieldPanel('description'),
-        ImageChooserPanel('image'),
+        FieldPanel('image'),
     ]
 
 
@@ -114,6 +114,7 @@ class PodcastPage(Page):
         ],
         null=True,
         blank=True,
+        use_json_field=True,
     )
 
     sode_image = models.ForeignKey(
@@ -131,11 +132,11 @@ class PodcastPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('date'),
-        MediaChooserPanel('audio'),
+        FieldPanel('audio'),
         FieldPanel('tags'),
         FieldPanel('description'),
-        StreamFieldPanel("body"),
-        ImageChooserPanel('sode_image'),
+        FieldPanel("body"),
+        FieldPanel('sode_image'),
     ]
     subpage_types = []
 
