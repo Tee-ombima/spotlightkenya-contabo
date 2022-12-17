@@ -227,12 +227,12 @@ STATICFILES_FINDERS = [
 # See https://docs.djangoproject.com/en/2.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
 # STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles-cdn")
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 STATIC_URL = "/static/"
 # STATIC_URL = 'http://spotlight-club-bucket.s3-website.ap-south-1.amazonaws.com' + '/static/'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # STATICFILES_STORAGE = "django.contrib.staticfiles.storage.CachedStaticFilesStorage"
-MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles-cdn")
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 MEDIA_URL = "/media/"
 # MEDIA_URL = 'http://spotlight-club.s3-website.ap-south-1.amazonaws.com' + '/media/'
 from .cdn.conf import * #noqa
