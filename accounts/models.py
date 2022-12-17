@@ -17,6 +17,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=50, blank=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     #date_joined = models.DateTimeField(default=now,blank=True)
 
     USERNAME_FIELD = "email"
