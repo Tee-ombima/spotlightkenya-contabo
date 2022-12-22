@@ -59,7 +59,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # Settings related to DigitalOcean Spaces
 USE_SPACES = os.getenv("USE_SPACES") == "TRUE"
-
+SITE_ID=1
 #STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 AUTH_USER_MODEL = "accounts.User"
